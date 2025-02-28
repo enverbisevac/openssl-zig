@@ -47,7 +47,7 @@ fn libcrypto(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.buil
     lib.root_module.addCMacro("OSSL_PKEY_PARAM_RSA_DERIVE_FROM_PQ", "1");
     if (lib.rootModuleTarget().isMinGW())
         lib.root_module.addCMacro("NOCRYPT", "1");
-    if (lib.rootModuleTarget().isDarwin())
+    if (lib.rootModuleTarget().os.tag == .macos)
         // CommonCrypto
         lib.root_module.linkFramework("CoreServices", .{});
     if (lib.rootModuleTarget().cpu.arch.isRISCV())
@@ -1028,7 +1028,7 @@ fn libprovider(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.bu
     lib.root_module.addCMacro("OPENSSL_NO_QUIC", "");
     lib.root_module.addCMacro("OPENSSL_CPUID_OBJ", "");
     lib.root_module.addCMacro("OSSL_RAND_PARAM_GENERATE", "");
-    if (lib.rootModuleTarget().isDarwin()) {
+    if (lib.rootModuleTarget().os.tag == .macos) {
         // CommonCrypto
         lib.root_module.linkFramework("CoreServices", .{});
         lib.root_module.addCMacro("OPENSSL_SYS_MACOSX", "1");
